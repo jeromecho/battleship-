@@ -1,19 +1,11 @@
 // React file 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/login.css';
 import 'normalize.css';
-import { 
-    Ship,
-    Gameboard, 
-    Player, 
-    Computer, 
-    Carrier, 
-    Battleship,
-    Cruiser,
-    Submarine,
-    Destroyer,
-} from './logic/logic.js';
+import './styles/login.css';
+import './styles/game.css';
+import './styles/app.css';
+import Logic from './logic/logic.js';
 import App from './components/app.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -30,8 +22,8 @@ function startGame() {
 
 function playGame(name) {
 	    // TODO - change to UI input 
-    const player  = Player(name, Gameboard());
-    const computer = Computer(Gameboard());
+    const player  = Logic.Player(name, Logic.Gameboard());
+    const computer = Logic.Computer(Logic.Gameboard());
 
     placeShips(player, computer);
     runGameLoop(player, computer);
@@ -47,17 +39,17 @@ function playGame(name) {
 
 function placeShips(player, computer) {
     // TODO - allow for placement or drag n' drop
-    player.gameboard.placeShip([0,0], Carrier('horizontal'));
-    player.gameboard.placeShip([1,0], Battleship('horizontal'));
-    player.gameboard.placeShip([2,0], Cruiser('horizontal'));
-    player.gameboard.placeShip([3,0], Submarine('horizontal'));
-    player.gameboard.placeShip([4,0], Destroyer('horizontal'));
+    player.gameboard.placeShip([0,0], Logic.Carrier('horizontal'));
+    player.gameboard.placeShip([1,0], Logic.Battleship('horizontal'));
+    player.gameboard.placeShip([2,0], Logic.Cruiser('horizontal'));
+    player.gameboard.placeShip([3,0], Logic.Submarine('horizontal'));
+    player.gameboard.placeShip([4,0], Logic.Destroyer('horizontal'));
 
-    computer.gameboard.placeShip([0,0], Carrier('horizontal'));
-    computer.gameboard.placeShip([1,0], Battleship('horizontal'));
-    computer.gameboard.placeShip([2,0], Cruiser('horizontal'));
-    computer.gameboard.placeShip([3,0], Submarine('horizontal'));
-    computer.gameboard.placeShip([4,0], Destroyer('horizontal'));
+    computer.gameboard.placeShip([0,0], Logic.Carrier('horizontal'));
+    computer.gameboard.placeShip([1,0], Logic.Battleship('horizontal'));
+    computer.gameboard.placeShip([2,0], Logic.Cruiser('horizontal'));
+    computer.gameboard.placeShip([3,0], Logic.Submarine('horizontal'));
+    computer.gameboard.placeShip([4,0], Logic.Destroyer('horizontal'));
 }
 
 function runGameLoop(player, computer) {
