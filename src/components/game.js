@@ -1,6 +1,7 @@
 import React from 'react';
 import Gameboard from './gameboard.js';
 import ShipsPlacer from './shipsplacer.js';
+import Logic from '../logic/logic.js';
 
 class Game extends React.Component {
     constructor(props) {
@@ -9,15 +10,21 @@ class Game extends React.Component {
             statusMessage: 'DEFAULT STATUS MESSAGE',
             isShipsAllPlaced: false,
             shipsPlaced: [],
+            player: Logic.Player(this.props.playerName, Logic.Gameboard()),
+            computer: Logic.Computer(Logic.Gameboard()),
         };
+        // orientation does not matter here ('horizontal' filler value)
         this.shipsToPlace = [
-            'carrier',
-            'battleship', 
-            'cruiser',
-            'submarine',
-            'destroyer'];
+            Logic.Carrier('horizontal'), 
+            Logic.Battleship('horizontal'),
+            Logic.Cruiser('horizontal'),
+            Logic.Submarine('horizontal'),
+            Logic.Destroyer('horizontal')
+        ];
         this.updateShipsToPlace = this.updateShipsToPlace.bind(this);
         this.handleDrop = this.handleDrop.bind(this);
+        this.updatePlayerBoard = this.updatePlayerBoard.bind(this);
+        this.updateComputerBoard = this.updateComputerBoard.bind(this);
     }
 
     render () {
@@ -40,9 +47,13 @@ class Game extends React.Component {
                     <main>
                         <Gameboard 
                         name={this.props.playerName}
-                        handleDrop={this.handleDrop}/>
-                        {this.state.isShipsAllPlaced ?
-                            <Gameboard /> :
+                        handleDrop={this.handleDrop}
+                        board={this.state.player.gameboard.board}
+                        handleChange={this.updatePlayerBoard}/>
+                       {this.state.isShipsAllPlaced ?
+                            <Gameboard 
+                            board={this.state.computer.gameboard.board}
+                            /> :
                             <ShipsPlacer 
                             toggleShipsAllPlacedStatus={this.updateShipPlacementStatus}
                             shipsToPlace={this.shipsToPlace}
@@ -58,6 +69,7 @@ class Game extends React.Component {
         }
     }
 
+    // TODO - integrate w onDragStart, onDragOver, onDrop
     handleDrop(ship) {
         this.setState({shipsPlaced: this.state.shipsPlaced.concat([ship])});
         this.updateShipsToPlace();
@@ -71,6 +83,16 @@ class Game extends React.Component {
 
     updateShipsToPlace() {
         this.shipsToPlace = this.shipsToPlace.filter(ship => !this.shipsPlaced(ship))
+    }
+
+    // TODO - actually, need two handlers - for onShipPlaced 
+    // onAttack - not just an 'update...' function
+    updatePlayerBoard() {
+
+    }
+
+    updateComputerBoard() {
+
     }
 }
 
