@@ -1,0 +1,36 @@
+#root {
+    --square-side-length: 2em;
+}
+
+#root {
+    height: inherit;
+    width: inherit;
+}
+
+main {
+    display: flex;
+}
+
+#shipscontainer {
+    padding: 2em;
+}
+
+.ship {
+    display: flex;
+    margin: 2em;
+}
+
+.square {
+    border: 1px solid black; 
+    height: var(--square-side-length);
+    width: var(--square-side-length);
+}
+
+#grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+}
