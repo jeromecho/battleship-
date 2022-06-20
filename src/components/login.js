@@ -11,7 +11,7 @@ class Login extends React.Component {
     }
 
     render () {
-        const companyName = 'Cho Industries Presents';
+        const companyName = 'Cho Industries™ Presents';
         const title = 'BATTLESHIP';
         const buttonText = 'PLAY';
 
@@ -25,6 +25,7 @@ class Login extends React.Component {
                     <div id='input-container'>
                         <input 
                         type='text' 
+                        placeholder='Type your name, captain'
                         value={this.state.value}
                         onChange={this.handleChange}
                     />

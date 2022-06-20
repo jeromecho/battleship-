@@ -9,12 +9,11 @@ class App extends React.Component {
             isLoginDisplayed: true,
             isGameDisplayed: false,
             playerName: '',
-            // TODO - pass down handlers to child components to allow dynamic 
-            //        updating of status message
         }
         this.handleClick = this.handleClick.bind(this);
         this.updateName = this.updateName.bind(this);
         this.toggleDisplayStatus = this.toggleDisplayStatus.bind(this);
+        this.handleReset  = this.handleReset.bind(this);
     }
 
     render () {
@@ -26,12 +25,12 @@ class App extends React.Component {
             <Game 
             isDisplayed={this.state.isGameDisplayed}
             playerName={this.state.playerName}
+            onReset={this.handleReset}
             />
             </>
         );
     }
 
- 
     handleClick(name) {
         this.toggleDisplayStatus();
         this.updateName(name);
@@ -42,9 +41,13 @@ class App extends React.Component {
     }
 
     toggleDisplayStatus() {
-        // in this case - no need to bind this?
         this.setState({isLoginDisplayed: false});
         this.setState({isGameDisplayed: true});
+    }
+
+    handleReset() {
+        this.setState({isLoginDisplayed: true});
+        this.setState({isGameDisplayed: false});
     }
 }
 
