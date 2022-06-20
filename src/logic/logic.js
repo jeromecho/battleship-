@@ -105,6 +105,18 @@ const Logic = (function () {
             return isAPositionOccupied;
         }
 
+        function isPositionsInBoard(positions) {
+            let isPositionsValid = true; 
+            positions.forEach(pos  => {
+                let [y, x] = pos;
+                if (y >= 10 || x>= 10) {
+                    isPositionsValid = false;
+                }
+            })
+
+            return isPositionsValid;
+        }
+
         function updateShipsStatus() {
             //  TODO 
             //  Run updateSunkStatus of each ship 
@@ -114,7 +126,73 @@ const Logic = (function () {
             });
 
             this.ships = copy;
-        };
+        }
+
+        function removeShip(positions, occupyingShipIndex) {
+            const boundRemoveShipFromBoard = removeShipFromBoard.bind(this, positions);
+            const boundRemoveShipFromList = removeShipFromList.bind(this, occupyingShipIndex);
+            boundRemoveShipFromBoard();
+            boundRemoveShipFromList();
+        }
+
+        function removeShipFromBoard(positions) {
+            let boardCopy = this.board;
+            positions.forEach(pos => {
+                let [y, x] = pos;
+                boardCopy[y][x] = 'O';
+            });
+            this.board = boardCopy;
+        }
+
+        function removeShipFromList(occupyingShipIndex) {
+            let shipsCopy = this.ships;
+            shipsCopy.splice(occupyingShipIndex, 1);
+            this.ships = shipsCopy;
+        }
+
+        function rotateShip(occupyingShipPositions, occupyingShip) {
+            if (occupyingShip.orientation === 'horizontal') {
+                let posToPlace = occupyingShipPositions.reduce((prev, curr) => {
+                    let [prevY, prevX] = prev;
+                    let [currY, currX] = curr;
+                    if (currX < prevX) {
+                        return curr;
+                    } else {
+                        return prev;
+                    }
+                });
+                let attempt = this.placeShip(posToPlace, {
+                    ...occupyingShip,
+                    orientation: 'vertical',
+                });
+                if (attempt === 'Invalid ship placement') {
+                    this.placeShip(posToPlace,  {
+                        ...occupyingShip,
+                        orientation: 'horizontal',
+                });
+                }
+            } else {
+                let posToPlace = occupyingShipPositions.reduce((prev, curr) => {
+                    let [prevY, prevX] = prev;
+                    let [currY, currX] = curr;
+                    if (currY < prevY) {
+                        return curr;
+                    } else {
+                        return prev;
+                    }
+                });
+                let attempt = this.placeShip(posToPlace, {
+                    ...occupyingShip,
+                    orientation: 'horizontal',
+                });
+                if (attempt === 'Invalid ship placement') {
+                    this.placeShip(posToPlace,  {
+                        ...occupyingShip,
+                        orientation: 'vertical',
+                });
+                }
+            }
+        }
 
         return ({
             //  O - open 
@@ -148,8 +226,7 @@ const Logic = (function () {
                 }
 
                 let boundIsPositionsOccupied = isPositionsOccupied.bind(this, positions);
-
-                if (!(boundIsPositionsOccupied())) {
+                if (isPositionsInBoard(positions) && !(boundIsPositionsOccupied())) {
                     // * does returning a bound copy use more computer resources? 
                     // keeps track in logic       
                     let boundAddShipToList = addShipToList.bind(this, ship, positions);
@@ -159,8 +236,33 @@ const Logic = (function () {
                     boundAddShipToBoard();
                 } else {
                     // handler that displays message to DOM;
-                    return 'Positions already occupied by another ship';
+                    return 'Invalid ship placement';
                 }
+            },
+            orientateShip: function(pos) {
+                let [y, x] = pos;
+                let occupyingShip;
+                let occupyingShipIndex;
+                let occupyingShipPositions;
+                this.ships.forEach((obj, index) => {
+                    obj.positions.forEach(pos => {
+                        let [objY, objX] = pos;
+                        if (objY === y && objX === x) {
+                            occupyingShipPositions =  obj.positions;
+                            occupyingShip = obj.ship;
+                            occupyingShipIndex = index;
+                        }
+                    });
+                });
+                const boundRemoveShip = removeShip
+                    .bind(this,
+                    occupyingShipPositions,
+                    occupyingShipIndex);
+                boundRemoveShip();
+
+                const boundRotateShip = rotateShip
+                    .bind(this, occupyingShipPositions, occupyingShip);
+                boundRotateShip();
             },
             receiveAttack: function(pos) {
                 let [y, x] = pos;
@@ -186,6 +288,7 @@ const Logic = (function () {
             updateSunkStatus: function () {
                 let isAllSunk = true; 
                 this.ships.forEach(obj => {
+                    obj['ship'].updateSunkStatus();
                     if (obj['ship'].isSunken === false) {
                         isAllSunk = false;
                     }
@@ -207,7 +310,7 @@ const Logic = (function () {
     };
 
     const Computer = (gameboard) => {
-        const player = Player('computer', gameboard);
+        const player = Player('Computer', gameboard);
 
         return ({
             ...player,
