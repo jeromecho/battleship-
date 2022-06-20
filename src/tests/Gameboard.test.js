@@ -1,9 +1,9 @@
-import { Gameboard, Ship } from '../logic/logic.js';
+import Logic from '../logic/logic.js';
 
 // * due to behaviour of JSON.stringify(), below does not test for line-by-line 
 //   equality in functiosn 
 it ('returns Gameboard', () => {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     expect(JSON.stringify(gameboard)).toEqual(JSON.stringify({
         board: [
             ['O','O','O','O','O','O','O','O','O','O'],
@@ -55,14 +55,14 @@ it ('returns Gameboard', () => {
 });
 
 it('places horizontally', () =>  {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip(
         [0,0],
-        Ship('horizontal', 5, 'carrier')
+        Logic.Ship('horizontal', 5, 'carrier')
     );
 
     expect(JSON.stringify(gameboard.ships)).toEqual(JSON.stringify([{
-        ship: Ship('horizontal', 5, 'carrier'),
+        ship: Logic.Ship('horizontal', 5, 'carrier'),
         positions: [
             [0, 0], [0, 1], [0, 2], [0, 3], [0, 4]
         ]
@@ -77,14 +77,14 @@ it('places horizontally', () =>  {
 });
 
 it('places vertically', () => {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip(
         [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
 
     expect(JSON.stringify(gameboard.ships)).toEqual(JSON.stringify([{
-        ship: Ship('vertical', 5, 'carrier'),
+        ship: Logic.Ship('vertical', 5, 'carrier'),
         positions: [
             [0, 0], [1, 0], [2, 0], [3, 0], [4, 0]
         ]
@@ -100,25 +100,24 @@ it('places vertically', () => {
 
 
 it('places multiple ships', () => {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip(
         [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
     gameboard.placeShip(
         [5,5],
-        Ship('horizontal', 4,'battleship')
+        Logic.Ship('horizontal', 4,'battleship')
     );
-
     expect(JSON.stringify(gameboard.ships)).toEqual(JSON.stringify([
         {
-            ship: Ship('vertical', 5, 'carrier'),
+            ship: Logic.Ship('vertical', 5, 'carrier'),
             positions: [
                 [0, 0], [1, 0], [2, 0], [3, 0], [4, 0]
             ]
         },
         {
-            ship: Ship('horizontal', 4, 'battleship'),
+            ship: Logic.Ship('horizontal', 4, 'battleship'),
             positions: [
                 [5, 5], [5, 6], [5, 7], [5, 8]
             ]
@@ -136,14 +135,14 @@ it('places multiple ships', () => {
 });
 
 it('prevents placing ship in positions already occupied by a ship', () => {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip(
         [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
     expect(JSON.stringify(gameboard.ships)).toEqual(JSON.stringify([
         {
-            ship: Ship('vertical', 5, 'carrier'),
+            ship: Logic.Ship('vertical', 5, 'carrier'),
             positions: [
                 [0, 0], [1, 0], [2, 0], [3, 0], [4, 0]
             ]
@@ -151,43 +150,43 @@ it('prevents placing ship in positions already occupied by a ship', () => {
     ]));
     expect(gameboard.placeShip(
         [0,0],
-        Ship('horizontal', 4, 'battleship')
-    )).toBe('Positions already occupied by another ship');
+        Logic.Ship('horizontal', 4, 'battleship')
+    )).toBe('Invalid ship placement');
 });
 
 it('receives attack - hit', () => {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip(
         [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
     gameboard.receiveAttack([0,0]);
     expect(gameboard.board[0][0]).toBe('H');
 });
 
 it('receives attack - miss', () => {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip(
         [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
     gameboard.receiveAttack([6,6])
     expect(gameboard.board[6][6]).toBe('X');
 });
 
 it('isAllSunk false for one ship not sunk', ()  =>  {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip( [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
     gameboard.updateSunkStatus();
     expect(gameboard.isAllSunk).toBe(false);
 });
 
 it('isAllSunk true for one ship sunk', ()  =>  {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip( [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
     gameboard.receiveAttack([0,0]);
     gameboard.receiveAttack([1,0]);
@@ -201,30 +200,30 @@ it('isAllSunk true for one ship sunk', ()  =>  {
 
 
 it('isAllSunk false when multiple not sunk', () => {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip( [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
     gameboard.placeShip( [0,3],
-        Ship('horizontal', 4, 'battleship')
+        Logic.Ship('horizontal', 4, 'battleship')
     );
     gameboard.placeShip( [5,5],
-        Ship('horizontal', 2, 'destroyer')
+        Logic.Ship('horizontal', 2, 'destroyer')
     );
     gameboard.updateSunkStatus();
     expect(gameboard.isAllSunk).toBe(false);
 });
 
 it('isAllSunk false when some not sunk', () => {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip( [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
     gameboard.placeShip( [0,3],
-        Ship('horizontal', 4, 'battleship')
+        Logic.Ship('horizontal', 4, 'battleship')
     );
     gameboard.placeShip( [5,5],
-        Ship('horizontal', 2, 'destroyer')
+        Logic.Ship('horizontal', 2, 'destroyer')
     );
     gameboard.receiveAttack([0,0]);
     gameboard.receiveAttack([1,0]);
@@ -237,15 +236,15 @@ it('isAllSunk false when some not sunk', () => {
 });
 
 it('isAllSunk true when all ships sunk', () => {
-    const gameboard = Gameboard();
+    const gameboard = Logic.Gameboard();
     gameboard.placeShip( [0,0],
-        Ship('vertical', 5, 'carrier')
+        Logic.Ship('vertical', 5, 'carrier')
     );
     gameboard.placeShip( [0,3],
-        Ship('horizontal', 4, 'battleship')
+        Logic.Ship('horizontal', 4, 'battleship')
     );
     gameboard.placeShip( [5,5],
-        Ship('horizontal', 2, 'destroyer')
+        Logic.Ship('horizontal', 2, 'destroyer')
     );
     gameboard.receiveAttack([0,0]);
     gameboard.receiveAttack([1,0]);

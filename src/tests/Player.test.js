@@ -1,38 +1,4 @@
-// THIS WILL BREAK
-import { Player, Computer, Gameboard, Ship } from '../logic/logic.js'
-
-it('creates player', () => {
-    const player = Player('Jerome', Gameboard());
-    expect(JSON.stringify(player)).toEqual(JSON.stringify({
-        name: 'Jerome',
-        gameboard: Gameboard(),
-        makeAttack(board, pos) {
-            board.receiveAttack(pos);
-        },
-    }));
-});
-
-it('creates computer', () => {
-    const computer = Computer(Gameboard());
-    expect(JSON.stringify(computer)).toEqual(JSON.stringify({
-        name: 'computer', 
-        gameboard: Gameboard(),
-        makeAttack(board, pos) {
-            const attackResult = board.receiveAttack(pos);
-            if (! (attackResult === 'attacked same place twice')) {
-                return;
-            } else {
-                makeAttack(board, this.pickPos());
-            }
-        },
-        pickPos: function ()  {
-            let y = Math.floor(Math.random() * 10);
-            let x = Math.floor(Math.random() * 10);
-
-            return [y, x];
-        },
-    }));
-});
+import Logic from '../logic/logic.js'
 
 // Q: any other way? Nearest "edge" seems like receiveAttack() being called 
 // on enemyBoard, but how can I do this when I am not mocking the 
@@ -49,8 +15,8 @@ it('player makes attack', () => {
         });
         return count;
     }
-    const player = Player('Jerome', Gameboard());
-    const enemyBoard = Gameboard();
+    const player = Logic.Player('Jerome', Logic.Gameboard());
+    const enemyBoard = Logic.Gameboard();
     player.makeAttack(enemyBoard, [0,0]); 
     expect(tallyAttacksOnBoard(enemyBoard)).toBe(1);
 });
@@ -67,8 +33,8 @@ it('computer makes attack', () => {
         });
         return count;
     }
-    const computer = Computer(Gameboard());
-    const enemyBoard = Gameboard();
+    const computer = Logic.Computer(Logic.Gameboard());
+    const enemyBoard = Logic.Gameboard();
     computer.makeAttack(enemyBoard, computer.pickPos());
     expect(tallyAttacksOnBoard(enemyBoard)).toBe(1);
 });
@@ -85,8 +51,8 @@ it('computer does not attack same place twice', () => {
         });
         return count;
     }
-    const computer = Computer(Gameboard());
-    const enemyBoard = Gameboard();
+    const computer = Logic.Computer(Logic.Gameboard());
+    const enemyBoard = Logic.Gameboard();
     computer.makeAttack(enemyBoard, [0,0]);
     computer.makeAttack(enemyBoard, [0,0]);
     expect(tallyAttacksOnBoard(enemyBoard)).toBe(2);
