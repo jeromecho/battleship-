@@ -1,0 +1,51 @@
+#game {
+    --square-side-length: 2em;
+    --ship-square-color: #A91079;
+    --carrier-color: #C724B1;
+    --battleship-color: #4D4DFF; 
+    --cruiser-color: #E0E722;
+    --submarine-color: #FFAD00;
+    --destroyer-color: #DB3EB1;
+    --overlay-color: #A9A9A9;   
+}
+
+#root {
+    height: inherit;
+    width: inherit;
+}
+
+#game {
+    height: 100%;
+    width: 100%;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+main > * {
+    margin: 3em;
+}
+
+#overlay {
+    align-items: center;
+    background-color: var(--overlay-color);
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    margin: 0;
+    opacity: 0.5;
+    position: fixed;
+    top: 0px;
+    width: 100vw;
+}
+
+#overlay > #winner-banner {
+
+}
+
+
+
+
+

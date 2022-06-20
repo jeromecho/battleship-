@@ -1,0 +1,118 @@
+.gameboard {
+    --hit-color: #D22730;
+    --miss-color: #44D62C; 
+    --hover-color: #D3D3D3;
+}
+
+.gameboard {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.gameboard > h3 {
+    color: var(--foreground-color);
+    font-family: var(--message-font);
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+#board {
+    display: grid;
+    grid-template-rows: 10% 90%;
+    grid-template-columns: 10% 90%;
+}
+
+#board p {
+    color: var(--foreground-color);
+    font-family: var(--message-font);
+}
+
+#letters {
+    display: flex;
+    flex-direction: column;
+}
+
+#letters > * {
+    margin: 0.5rem;
+}
+
+#numbers {
+    display: flex;
+}
+
+#numbers > * {
+    margin: 0.7rem;
+}
+
+.square {
+    background-color: var(--foreground-color);
+    border: 1px solid black; 
+    height: var(--square-side-length);
+    width: var(--square-side-length);
+}
+
+@keyframes hit {
+    from {
+        background-color: var(--foreground-color);
+        transform: scale(1);
+    }
+    to {
+        background-color: var(--hit-color);
+        transform: scale(1.1);
+    }
+}
+
+.square-hit {
+    animation-name: hit;
+    animation-duration: 300ms;
+    background-color: var(--hit-color);
+}
+
+.square-miss {
+    background-color: var(--miss-color);
+}
+
+#grid {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+}
+
+.square:hover {
+    background-color: var(--hover-color);
+    cursor: pointer;
+}
+
+.carrier {
+    background-color: var(--carrier-color);
+}
+
+.battleship {
+    background-color: var(--battleship-color);
+}
+
+.cruiser {
+    background-color: var(--cruiser-color);
+}
+
+.submarine {
+    background-color: var(--submarine-color);
+}
+
+.destroyer {
+    background-color: var(--destroyer-color);
+}
+
+.square-hit {
+    background-color: var(--hit-color);
+}
+
+.square-miss {
+    background-color: var(--miss-color); 
+}
+

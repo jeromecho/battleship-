@@ -1,6 +1,25 @@
+:root {
+    --title-font: 'Fascinate', cursive;
+    display: flex;
+    font-size: 20px;
+    position: relative;
+}
 
-/* TODO - Not working*/
 html, body {
     height: 100%;
     width: 100%;
 }
+
+#root {
+    display: flex;
+}
+
+.title {
+    font-family: var(--title-font);
+}
+
+.tagline {
+    font-family: var(--title-font);
+}
+
+

@@ -1,0 +1,83 @@
+#shipsplacer {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-width: calc(var(--square-side-length) * 7);
+}
+
+#shipsplacer > button {
+    border-radius: 20px;
+    box-shadow: 0px 5px 5px var(--shadow-color);
+    cursor: pointer;
+    font-family: var(--title-font);
+    transition: 300ms;
+    width: 7rem;
+}
+
+#shipsplacer > button:hover {
+    transform: scale(1.1);
+}
+
+#shipsplacer > p {
+    color: var(--foreground-color);
+    font-family: var(--message-font);
+    font-size: 1.1rem;
+    margin-top: 3rem;
+}
+
+#shipscontainer {
+    padding: 2em;
+    margin-top: -1rem;
+}
+
+.ship {
+    display: flex;
+    margin: 2em;
+    transition: 200ms;
+    width: fit-content;
+}
+
+.ship:hover {
+    box-shadow: 0px 5px 20px var(--shadow-color);
+    transform: scale(1.1);
+}
+
+#carrier > .square {
+    background-color: var(--carrier-color);
+}
+
+#battleship > .square {
+    background-color: var(--battleship-color);
+}
+
+#cruiser > .square {
+    background-color: var(--cruiser-color);
+}
+
+#submarine > .square {
+    background-color: var(--submarine-color);
+}
+
+#destroyer > .square {
+    background-color: var(--destroyer-color);
+}
+
+#playgame-banner {
+
+}
+
+#playgame-banner > button {
+    border-radius: 20px;
+    box-shadow: 0px 5px 5px var(--shadow-color);
+    cursor: pointer;
+    font-family: var(--title-font);
+    transition: 300ms;
+    width: 7rem;
+}
+
+#playgame-banner > button:hover {
+    transform: scale(1.1);
+}
+
+
+
