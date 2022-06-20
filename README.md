@@ -3,6 +3,7 @@ Exercising TDD with Jest and first React.js project
 
 ## Pictures
 
+![image](https://user-images.githubusercontent.com/71617542/174662908-232ba2e0-814f-4530-bf09-b357b7f948ec.png)
 ![image](https://user-images.githubusercontent.com/71617542/174661643-4f595f4b-0c80-4e47-afa0-287430a5b8b1.png)
 ![image](https://user-images.githubusercontent.com/71617542/174661868-f3ceacf2-b52e-4af1-947e-2c934c86f2fb.png)
 ![image](https://user-images.githubusercontent.com/71617542/174661893-2a5592fa-97bd-4126-8f8e-3fd3b365444d.png)
