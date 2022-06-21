@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/jeromecho/battleship-/static/css/main.c2b6d191.css",
+    "main.js": "/jeromecho/battleship-/static/js/main.a45a563c.js",
+    "static/media/galaxy.gif": "/jeromecho/battleship-/static/media/galaxy.84492d7a565fe5e02886.gif",
+    "index.html": "/jeromecho/battleship-/index.html",
+    "main.c2b6d191.css.map": "/jeromecho/battleship-/static/css/main.c2b6d191.css.map",
+    "main.a45a563c.js.map": "/jeromecho/battleship-/static/js/main.a45a563c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c2b6d191.css",
+    "static/js/main.a45a563c.js"
+  ]
+}
